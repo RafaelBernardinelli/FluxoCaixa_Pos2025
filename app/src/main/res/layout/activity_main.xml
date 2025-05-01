@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_gradient_mirror"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Controle de Caixa"
+        android:textSize="26sp"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
+
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@drawable/bg_glass_card"
+        android:elevation="12dp"
+        android:layout_marginTop="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="false"
+        android:clipToPadding="false">
+
+        <Spinner
+            android:id="@+id/spinnerType"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:spinnerMode="dropdown"
+            />
+
+        <Spinner
+            android:id="@+id/spinnerDetail"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_field"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp" />
+
+        <EditText
+            android:id="@+id/etValor"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/bg_field"
+            android:backgroundTint="#FFFFFF"
+            android:hint="@string/valor"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColorHint="#B0BEC5" />
+
+        <EditText
+            android:id="@+id/etData"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/bg_field"
+            android:backgroundTint="#FFFFFF"
+            android:hint="@string/data_lanc"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColorHint="#B0BEC5" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/lancar"
+            android:backgroundTint="#00FFC6"
+            android:textColor="#1F1C2C"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnReleases"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/ver_lancamentos"
+            android:backgroundTint="#FF007A"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="12dp" />
+
+        <Button
+            android:id="@+id/btnBalance"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/ver_saldo"
+            android:backgroundTint="#FFD700"
+            android:textColor="#1F1C2C" />
+
+    </LinearLayout>
+
+</RelativeLayout>

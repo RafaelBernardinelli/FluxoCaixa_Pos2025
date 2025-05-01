@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FluxoCaixa_Pos2025</string>
+    <string name="lancar">Lançar</string>
+    <string name="ver_lancamentos">Ver Lançamentos</string>
+    <string name="ver_saldo">Ver saldo</string>
+    <string name="data_lanc">Data Lanç.</string>
+    <string name="valor">Valor</string>
+</resources>
