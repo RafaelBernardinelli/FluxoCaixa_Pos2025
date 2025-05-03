@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -13,6 +14,9 @@ import android.widget.EditText
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.AppCompatSpinner
+import androidx.appcompat.widget.TooltipCompat
 import br.edu.utfpr.fluxocaixa_pos2025.R
 import br.edu.utfpr.fluxocaixa_pos2025.database.DatabaseHandler
 import br.edu.utfpr.fluxocaixa_pos2025.entity.Transaction
@@ -23,8 +27,8 @@ import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var spinnerType: Spinner
-    private lateinit var spinnerDetail: Spinner
+    private lateinit var spinnerType: AppCompatSpinner
+    private lateinit var spinnerDetail: AppCompatSpinner
     private lateinit var etData: EditText
     private lateinit var etValor: EditText
     private lateinit var database: DatabaseHandler
@@ -38,6 +42,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         setContentView(R.layout.activity_main)
 
         initViews()
@@ -45,11 +50,15 @@ class MainActivity : AppCompatActivity() {
         setupDetailSpinner(optionsSpinnerType.first())
         setupEditTextDate()
         setButtonsListeners()
+        setupTooltips()
     }
 
     private fun initViews() {
         spinnerType = findViewById(R.id.spinnerType)
+        spinnerType.setDropDownVerticalOffset(145)
+
         spinnerDetail = findViewById(R.id.spinnerDetail)
+        spinnerDetail.setDropDownVerticalOffset(145)
         etData = findViewById(R.id.etData)
         etValor = findViewById(R.id.etValor)
         etValor.addTextChangedListener(MoneyTextWatcher(etValor))
@@ -62,7 +71,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupTypeSpinner() {
         val adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_item,
+            R.layout.item_spinner,
             optionsSpinnerType
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -71,7 +80,6 @@ class MainActivity : AppCompatActivity() {
         spinnerType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 val selectedType = parent.getItemAtPosition(position) as String
-                Toast.makeText(this@MainActivity, "Selecionado: $selectedType", Toast.LENGTH_SHORT).show()
                 setupDetailSpinner(selectedType)
             }
 
@@ -88,17 +96,14 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_item,
+            R.layout.item_spinner,
             options
         )
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerDetail.adapter = adapter
 
         spinnerDetail.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                val selected = parent.getItemAtPosition(position) as String
-                Toast.makeText(this@MainActivity, "Selecionado: $selected", Toast.LENGTH_SHORT).show()
-            }
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {}
 
             override fun onNothingSelected(parent: AdapterView<*>) {}
         }
@@ -109,6 +114,8 @@ class MainActivity : AppCompatActivity() {
         etData.keyListener = null
 
         etData.setOnClickListener {
+            val inputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(etData.windowToken, 0)
             showDatePickerDialog()
         }
     }
@@ -206,6 +213,19 @@ class MainActivity : AppCompatActivity() {
 
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+
+    private fun setupTooltips() {
+        spinnerType.setOnLongClickListener {
+            Toast.makeText(this, "Toque para escolher o tipo de transação", Toast.LENGTH_SHORT).show()
+            true
+        }
+
+        spinnerDetail.setOnLongClickListener {
+            Toast.makeText(this, "Toque para escolher qual o lançamento", Toast.LENGTH_SHORT).show()
+            true
+        }
     }
 
     private fun clearFields() {
